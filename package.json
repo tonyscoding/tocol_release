@@ -1,0 +1,21 @@
+{
+  "name": "electron-test",
+  "version": "1.0.0",
+  "description": "building electron for test",
+  "main": "main.js",
+  "scripts": {
+    "test": "electron-dev",
+    "start": "electron .",
+    "rebuild": "npm rebuild"
+  },
+  "author": "hansol",
+  "license": "ISC",
+  "dependencies": {
+    "robotjs": "0.6.0"
+  },
+  "devDependencies": {
+    "electron": "13.1.4",
+    "electron-log": "4.3.5",
+    "electron-rebuild": "2.3.5"
+  }
+}
