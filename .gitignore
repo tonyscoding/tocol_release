@@ -3,4 +3,4 @@ yarn.lock
 yarn-error.log
 /dist
 
-/code-sign
+/code_sign

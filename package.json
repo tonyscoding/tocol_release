@@ -6,6 +6,7 @@
   "main": "main.js",
   "private": true,
   "author": "Tony's Coding",
+  "repository": "https://github.com/tonyscoding/tocol_release",
   "scripts": {
     "test": "electron-dev",
     "electron-dev": "electron .",
@@ -13,8 +14,8 @@
     "deploy-win": "electron-builder --windows nsis:ia32",
     "deploy-mac": "electron-builder --mac",
     "postinstall": "electron-builder install-app-deps",
-    "codesign": "cd code-sign && SignTool.exe sign /v /a /ac MSCV_UserTrust.cer /n \"Tony's Coding Co., Ltd.\" /f CHAIN_tonyscoding_com.pfx /p tlsqksvhfh219 /tr http://timestamp.digicert.com /td sha256 /fd sha256 TOPOLAR-Setup.exe",
-    "verify-codesign": "cd code-sign && SignTool.exe verify /v /kp TOPOLAR-Setup.exe"
+    "codesign": "cd code_sign && SignTool.exe sign /v /a /ac MSCV_UserTrust.cer /n \"Tony's Coding Co., Ltd.\" /f CHAIN_tonyscoding_com.pfx /p tlsqksvhfh219 /tr http://timestamp.digicert.com /td sha256 /fd sha256 TOPOLAR-Setup.exe",
+    "verify-codesign": "cd code_sign && SignTool.exe verify /v /kp TOPOLAR-Setup.exe"
   },
   "dependencies": {
     "electron-is-dev": "2.0.0",
@@ -32,6 +33,10 @@
     "appId": "com.app.topolar",
     "productName": "TOPOLAR",
     "artifactName": "TOPOLAR-Setup.${ext}",
+    "files": [
+      "**/*",
+      "!code_sign"
+    ],
     "publish": [
       {
         "provider": "github",
