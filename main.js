@@ -16,7 +16,7 @@ if(process.platform==='darwin'){
   require('electron').systemPreferences.askForMediaAccess('microphone');
 }
 
-const createWindow = () => {
+const createWindow = (paramUrl) => {
   const process = require('process')
   const cachePath = process.env.APPDATA + "\\"+app.getName()+"\\Cache"
   require("fs").rmdirSync(cachePath, {recursive: true})
@@ -38,6 +38,7 @@ const createWindow = () => {
   if(process.argv[1] && process.argv[1].startsWith("topolarapp")) {
     startUrl += process.argv[1].split("///")[1]
   }
+  if(paramUrl) startUrl+=paramUrl.split("//")[1]
 
   win.webContents.on('new-window', (e, url, frameName, disposition, options) => {
     e.preventDefault();
@@ -159,6 +160,7 @@ const createWindow = () => {
 let mouseDown = false
 const timeStamp = new Date().getTime();
 let gotTheLock = false
+let paramUrl;
 
 while(!gotTheLock){
   let tempTimeStamp = new Date().getTime();
@@ -172,21 +174,26 @@ while(!gotTheLock){
 
     // In Electron, browser windows can only be created after the app module's ready event is fired.
     app.whenReady().then(() => {
-      createWindow();
+      createWindow(paramUrl);
       if(!isDev) autoUpdater.checkForUpdates();
   
       app.on('activate', () => {
-          if(BrowserWindow.getAllWindows().length===0) createWindow();
+          if(BrowserWindow.getAllWindows().length===0) createWindow(paramUrl);
       })
     })
     
     app.on('window-all-closed', () => {
         if(process.platform!=='darwin') app.quit();
     })
+
+
   }
   tempTimeStamp = null;
 }
 
+app.on('open-url', (event, url) => {
+  if(process.platform==="darwin") paramUrl = url 
+})
 
 if (!app.isDefaultProtocolClient('topolarapp')) {
   // Define custom protocol handler. Deep linking works on packaged versions of the application!
