@@ -1,12 +1,11 @@
 {
   "name": "TOPOLAR",
   "homepage": "https://topolar.co.kr",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "TOPOLAR APP",
   "main": "main.js",
   "private": true,
   "author": "Tony's Coding",
-  "repository": "https://github.com/hansolc/electron-app",
   "scripts": {
     "test": "electron-dev",
     "electron-dev": "electron .",
