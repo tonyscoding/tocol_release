@@ -53,9 +53,16 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "/topolar_logo.ico"
+      "icon": "build/topolar_logo.ico"
     },
-    "mac": { "icon": "/topolar_logo.ico" }
+    "mac": { 
+      "icon": "build/topolar_logo.ico",
+      "entitlements": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "This app requires microphone access to record audio"
+      }
+    },
+    "afterSign": "build/notarize.js"
   },
   "eslintConfig": {
     "extends": "react-app"
