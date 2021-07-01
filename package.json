@@ -27,6 +27,7 @@
   "devDependencies": {
     "electron": "13.1.4",
     "electron-builder": "22.11.7",
+    "electron-notarize": "^1.0.0",
     "electron-rebuild": "2.3.5"
   },
   "build": {
@@ -53,16 +54,19 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "build/topolar_logo.ico"
+      "icon": "topolar_logo.ico"
     },
-    "mac": { 
-      "icon": "build/topolar_logo.ico",
-      "entitlements": "build/entitlements.mac.plist",
+    "mac": {
+      "icon": "./topolar_logo512.ico",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./entitlements.mac.plist",
+      "entitlementsInherit": "./entitlements.mac.plist",
       "extendInfo": {
         "NSMicrophoneUsageDescription": "This app requires microphone access to record audio"
       }
     },
-    "afterSign": "build/notarize.js"
+    "afterSign": "./notarize.js"
   },
   "eslintConfig": {
     "extends": "react-app"
