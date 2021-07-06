@@ -29,6 +29,7 @@ const createWindow = (paramUrl) => {
           nodeIntegration: true,
           contextIsolation: false,
           plugins: true,
+          enableRemoteModule: true,
           // The path.join API joins multiple path segments together, creating a combined path string that works across all platforms.
           preload: path.join(__dirname, 'preload.js')
       }
@@ -175,7 +176,16 @@ while(!gotTheLock){
     // In Electron, browser windows can only be created after the app module's ready event is fired.
     app.whenReady().then(() => {
       createWindow(paramUrl);
-      if(!isDev) autoUpdater.checkForUpdates();
+      if(!isDev) {
+        autoUpdater.setFeedURL({
+          provider: 'github',
+          repo: 'tocol_release',
+          owner: 'tonyscoding',
+          private: true,
+          token: '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'
+        })
+        autoUpdater.checkForUpdates();
+      }
   
       app.on('activate', () => {
           if(BrowserWindow.getAllWindows().length===0) createWindow(paramUrl);

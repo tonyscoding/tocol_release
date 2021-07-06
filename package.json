@@ -39,12 +39,7 @@
       "!code_sign"
     ],
     "publish": [
-      {
-        "provider": "github",
-        "owner": "tonyscoding",
-        "repo": "tocol_release",
-        "token": "b2d0396e0a129f26cbd336aeea8a77c9f05158a9"
-      }
+      "github"
     ],
     "protocols": {
       "name": "topolar-protocol",
