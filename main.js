@@ -12,7 +12,7 @@ let startUrl = "https://www.topolar.co.kr"
 // let startUrl = "https://tocol.info"
 
 // Ask for media access for Mac user
-if(process.platform==='darwin'){
+if(process.platform==='darwin' && !isDev){
   require('electron').systemPreferences.askForMediaAccess('microphone');
 }
 
