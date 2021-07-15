@@ -9,8 +9,8 @@ const vkey = require("vkey")
 let isSocialLogin = false
 let win = null;
 
-// let startUrl = "https://www.topolar.co.kr"
-let startUrl = "http://localhost:3000"
+let startUrl = "https://www.topolar.co.kr"
+// let startUrl = "http://localhost:3000"
 // let startUrl = "https://tocol.info"
 
 // Ask for media access for Mac user
