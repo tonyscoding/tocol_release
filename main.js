@@ -86,13 +86,13 @@ while(!gotTheLock){
     app.whenReady().then(() => {
       createWindow(paramUrl);
       if(!isDev) {
-        autoUpdater.setFeedURL({
-          provider: 'github',
-          repo: 'tocol_release',
-          owner: 'tonyscoding',
-          private: true,
-          token: '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'
-        })
+        // autoUpdater.setFeedURL({
+        //   provider: 'github',
+        //   repo: 'tocol_release',
+        //   owner: 'tonyscoding',
+        //   private: true,
+        //   token: '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'
+        // })
         autoUpdater.checkForUpdates();
       }
   

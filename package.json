@@ -6,7 +6,7 @@
   "main": "main.js",
   "private": true,
   "author": "Tony's Coding",
-  "repository": "https://github.com/tonyscoding/tocol_release",
+  "repository": "https://github.com/tonyscoding/tocol_release/",
   "scripts": {
     "test": "electron-dev",
     "electron-dev": "electron .",
