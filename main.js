@@ -3,12 +3,14 @@ const path = require('path')
 const isDev = require('electron-is-dev');
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater')
+const robot = require('robotjs')
+const vkey = require("vkey")
 
 let isSocialLogin = false
 let win = null;
 
-let startUrl = "https://www.topolar.co.kr"
-// let startUrl = "http://localhost:3000"
+// let startUrl = "https://www.topolar.co.kr"
+let startUrl = "http://localhost:3000"
 // let startUrl = "https://tocol.info"
 
 // Ask for media access for Mac user
@@ -63,99 +65,6 @@ const createWindow = (paramUrl) => {
   
   win.setMenuBarVisibility(false)
   win.loadURL(startUrl)
-  
-  const robot = require('robotjs')
-  const vkey = require("vkey")
-
-  ipcMain.on('get-screen-size', (event, args) => {
-      event.sender.send('reply-screen-size', robot.getScreenSize().width, robot.getScreenSize().height);
-  })
-
-  ipcMain.on("get-screen-size", (event, args) => {
-      var screenSize = robot.getScreenSize()
-      event.sender.send("reply-screen-size", screenSize.width, screenSize.height)
-    })
-    
-    ipcMain.on("mouse-click", (event, x, y) => {
-      robot.moveMouse(x, y)
-      robot.mouseClick()
-    })
-    
-    ipcMain.on("mouse-down", (event, x, y) => {
-      robot.moveMouse(x, y)
-      robot.mouseToggle("down")
-      mouseDown = true
-    })
-    
-    ipcMain.on("mouse-up", event => {
-      robot.mouseToggle("up")
-      mouseDown = false
-    })
-    
-    ipcMain.on("mouse-move", (event, x, y) => {
-      if (mouseDown) {
-        robot.dragMouse(x, y)
-      } else {
-        robot.moveMouse(x, y)
-      }
-    })
-    
-    ipcMain.on("right-mouse-down", (event, x, y) => {
-      robot.moveMouse(x, y)
-      robot.mouseToggle("down", "right")
-      mouseDown = true
-    })
-    
-    ipcMain.on("key-press", (event, keyCode, modifiers) => {
-      var k = vkey[keyCode].toLowerCase()
-      if (k === "<space>") k = " "
-    
-      if (k[0] !== "<") {
-        if (modifiers.length > 0 && modifiers[0]) robot.keyTap(k, modifiers)
-        else robot.keyTap(k)
-      } else {
-        let key = mapVkeyToRobotKey(k)
-        if(key){
-          if (modifiers.length > 0 && modifiers[0]) robot.keyTap(key, modifiers)
-          else robot.keyTap(key)
-        }
-      }
-    })
-    
-    function mapVkeyToRobotKey(vkey){
-      if (vkey === "<enter>") return "enter"
-      else if (vkey === "<backspace>") return "backspace"
-      else if (vkey === "<up>") return "up"
-      else if (vkey === "<down>") return "down"
-      else if (vkey === "<left>") return "left"
-      else if (vkey === "<right>") return "right"
-      else if (vkey === "<delete>") return "delete"
-      else if (vkey === "<home>") return "home"
-      else if (vkey === "<end>") return "end"
-      else if (vkey === "<page-up>") return "pageup"
-      else if (vkey === "<page-down>") return "pagedown"
-      else if (vkey === "<control>") return "control"
-      else if (vkey === "<meta>") return "command"
-      else if (vkey === "<alt>") return "alt"
-      else if (vkey === "<shift>") return "shift"
-      else if (vkey === "<tab>") return "tab"
-      else if (vkey == "<ime-hangul>") return "right_alt"
-      else return null
-    }
-    
-    ipcMain.on("mouse-click-test", (event, args) => {
-      robot.setMouseDelay(2)
-    
-      var twoPI = Math.PI * 2.0
-      var screenSize = robot.getScreenSize()
-      var height = screenSize.height / 2 - 10
-      var width = screenSize.width
-    
-      for (var x = 0; x < width; x++) {
-        var y = height * Math.sin((twoPI * x) / width) + height
-        robot.moveMouse(x, y)
-      }
-    })
 }
 
 let mouseDown = false
@@ -196,7 +105,6 @@ while(!gotTheLock){
         if(process.platform!=='darwin') app.quit();
     })
 
-
   }
   tempTimeStamp = null;
 }
@@ -209,6 +117,96 @@ if (!app.isDefaultProtocolClient('topolarapp')) {
   // Define custom protocol handler. Deep linking works on packaged versions of the application!
   app.setAsDefaultProtocolClient('topolarapp')
 }
+
+ipcMain.on('get-screen-size', (event, args) => {
+  event.sender.send('reply-screen-size', robot.getScreenSize().width, robot.getScreenSize().height);
+})
+
+ipcMain.on("get-screen-size", (event, args) => {
+  var screenSize = robot.getScreenSize()
+  event.sender.send("reply-screen-size", screenSize.width, screenSize.height)
+})
+
+ipcMain.on("mouse-click", (event, x, y) => {
+  robot.moveMouse(x, y)
+  robot.mouseClick()
+})
+
+ipcMain.on("mouse-down", (event, x, y) => {
+  robot.moveMouse(x, y)
+  robot.mouseToggle("down")
+  mouseDown = true
+})
+
+ipcMain.on("mouse-up", event => {
+  robot.mouseToggle("up")
+  mouseDown = false
+})
+
+ipcMain.on("mouse-move", (event, x, y) => {
+  if (mouseDown) {
+    robot.dragMouse(x, y)
+  } else {
+    robot.moveMouse(x, y)
+  }
+})
+
+ipcMain.on("right-mouse-down", (event, x, y) => {
+  robot.moveMouse(x, y)
+  robot.mouseToggle("down", "right")
+  mouseDown = true
+})
+
+ipcMain.on("key-press", (event, keyCode, modifiers) => {
+  var k = vkey[keyCode].toLowerCase()
+  if (k === "<space>") k = " "
+
+  if (k[0] !== "<") {
+    if (modifiers.length > 0 && modifiers[0]) robot.keyTap(k, modifiers)
+    else robot.keyTap(k)
+  } else {
+    let key = mapVkeyToRobotKey(k)
+    if(key){
+      if (modifiers.length > 0 && modifiers[0]) robot.keyTap(key, modifiers)
+      else robot.keyTap(key)
+    }
+  }
+})
+
+function mapVkeyToRobotKey(vkey){
+  if (vkey === "<enter>") return "enter"
+  else if (vkey === "<backspace>") return "backspace"
+  else if (vkey === "<up>") return "up"
+  else if (vkey === "<down>") return "down"
+  else if (vkey === "<left>") return "left"
+  else if (vkey === "<right>") return "right"
+  else if (vkey === "<delete>") return "delete"
+  else if (vkey === "<home>") return "home"
+  else if (vkey === "<end>") return "end"
+  else if (vkey === "<page-up>") return "pageup"
+  else if (vkey === "<page-down>") return "pagedown"
+  else if (vkey === "<control>") return "control"
+  else if (vkey === "<meta>") return "command"
+  else if (vkey === "<alt>") return "alt"
+  else if (vkey === "<shift>") return "shift"
+  else if (vkey === "<tab>") return "tab"
+  else if (vkey == "<ime-hangul>") return "right_alt"
+  else return null
+}
+
+ipcMain.on("mouse-click-test", (event, args) => {
+  robot.setMouseDelay(2)
+
+  var twoPI = Math.PI * 2.0
+  var screenSize = robot.getScreenSize()
+  var height = screenSize.height / 2 - 10
+  var width = screenSize.width
+
+  for (var x = 0; x < width; x++) {
+    var y = height * Math.sin((twoPI * x) / width) + height
+    robot.moveMouse(x, y)
+  }
+})
 
 autoUpdater.on('checking-for-update', (event) => {
   log.info("Checking for update: ")
