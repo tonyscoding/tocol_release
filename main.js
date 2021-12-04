@@ -9,9 +9,9 @@ const vkey = require("vkey")
 let isSocialLogin = false
 let win = null;
 
-let startUrl = "https://www.topolar.co.kr"
-// let startUrl = "http://localhost:3000"
-// let startUrl = "https://tocol.info"
+let startUrl = "https://www.topolar.co.kr/login?redirectPath=/student/new-classroom"
+// let startUrl = "http://localhost:3000/login?redirectPath=/student/new-classroom"
+// let startUrl = "https://tocol.info/login?redirectPath=/student/new-classroom"
 
 // Ask for media access for Mac user
 if(process.platform==='darwin' && !isDev){
