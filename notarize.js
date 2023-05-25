@@ -8,7 +8,7 @@ exports.default = async function notarizing(context) {
     return await notarize({
         appBundleId: 'kr.co.topolar.topolar',
         appPath: `${appOutDir}/${appName}.app`,
-        appleId: 'hansol.choi@tonyscoding.com',
-        appleIdPassword: 'smtu-illr-pisu-luvw'
+        appleId: 'viv4develop@gmail.com',
+        appleIdPassword: 'hmyi-osgs-bnah-ayah'
     })
 }

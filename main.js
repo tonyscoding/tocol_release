@@ -9,7 +9,7 @@ const vkey = require("vkey")
 let isSocialLogin = false
 let win = null;
 
-let startUrl = "https://www.topolar.co.kr/login?redirectPath=/student/new-classroom"
+let startUrl = "https://www.tocol.info/login?redirectPath=/student/new-classroom"
 // let startUrl = "http://localhost:3000/login?redirectPath=/student/new-classroom"
 // let startUrl = "https://tocol.info/login?redirectPath=/student/new-classroom"
 
@@ -240,3 +240,5 @@ autoUpdater.on('download-progress', (progressObj) => {
 autoUpdater.on('error', (message,error) => {
     log.info(error)
 })
+
+app.commandLine.appendSwitch('ignore-certificate-errors')
